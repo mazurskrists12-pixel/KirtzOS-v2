@@ -5,11 +5,19 @@ set -ouex pipefail
 # Copy system files from repo to image root
 cp -avf "/ctx/system_files"/. /
 
-### Enable Hyprland COPR Repository
-dnf5 -y copr enable solopasha/hyprland
+### 1. Enable rawhide repo definitions
+dnf5 install -y fedora-repos-rawhide
 
-### Install KirtzOS-v2 Packages
-dnf5 install -y --allowerasing \
+### 2. Upgrade libdisplay-info to satisfy aquamarine (.so.2) requirement
+dnf5 upgrade -y --enablerepo=rawhide --allowerasing libdisplay-info || dnf5 install -y --enablerepo=rawhide --allowerasing libdisplay-info
+
+### 3. Enable Hyprland COPR Repository
+dnf5 -y copr enable solopasha/hyprland fedora-rawhide-x86_64
+
+### 4. Install KirtzOS-v2 Packages
+dnf5 install -y \
+    --enablerepo=rawhide \
+    --allowerasing \
     hyprland \
     xdg-desktop-portal-hyprland \
     waybar \
@@ -23,8 +31,9 @@ dnf5 install -y --allowerasing \
     wl-clipboard \
     polkit-kde-agent-1
 
-# Clean up COPR repository
+# Clean up temporary repositories
 dnf5 -y copr disable solopasha/hyprland
+dnf5 config-manager setopt rawhide.enabled=0 2>/dev/null || true
 
 ### Desktop Session Setup
 mkdir -p /usr/share/wayland-sessions
