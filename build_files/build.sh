@@ -9,7 +9,9 @@ cp -avf "/ctx/system_files"/. /
 dnf5 -y copr enable solopasha/hyprland fedora-rawhide-x86_64
 
 ### Install KirtzOS-v2 Packages
-dnf5 install -y --allowerasing \
+dnf5 install -y \
+    --enablerepo=rawhide \
+    --allowerasing \
     hyprland \
     xdg-desktop-portal-hyprland \
     waybar \
@@ -23,7 +25,7 @@ dnf5 install -y --allowerasing \
     wl-clipboard \
     polkit-kde-agent-1
 
-# Disable COPR repository so it doesn't linger in the final image
+# Disable COPR repository
 dnf5 -y copr disable solopasha/hyprland
 
 ### Desktop Session Setup
