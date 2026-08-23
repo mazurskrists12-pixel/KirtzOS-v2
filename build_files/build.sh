@@ -5,19 +5,19 @@ set -ouex pipefail
 # Copy system files from repo to image root
 cp -avf "/ctx/system_files"/. /
 
-### 1. Enable rawhide repo definitions
+### 1. Install rawhide repo definitions
 dnf5 install -y fedora-repos-rawhide
 
-### 2. Upgrade libdisplay-info to satisfy aquamarine (.so.2) requirement
-dnf5 upgrade -y --enablerepo=rawhide --allowerasing libdisplay-info || dnf5 install -y --enablerepo=rawhide --allowerasing libdisplay-info
-
-### 3. Enable Hyprland COPR Repository
+### 2. Enable Hyprland COPR Repository
 dnf5 -y copr enable solopasha/hyprland fedora-rawhide-x86_64
+
+### 3. Install libdisplay-info directly from rawhide without erasing dependencies
+dnf5 install -y --enablerepo=rawhide libdisplay-info libdisplay-info-devel || true
 
 ### 4. Install KirtzOS-v2 Packages
 dnf5 install -y \
     --enablerepo=rawhide \
-    --allowerasing \
+    --skip-broken \
     hyprland \
     xdg-desktop-portal-hyprland \
     waybar \
