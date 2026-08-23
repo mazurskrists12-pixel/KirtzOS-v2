@@ -5,20 +5,26 @@ set -ouex pipefail
 # Copy system files from repo to image root
 cp -avf "/ctx/system_files"/. /
 
-### Install KirtzOS-v2 Packages from official Fedora repos
-dnf5 install -y \
+### Enable Hyprland COPR Repository
+dnf5 -y copr enable solopasha/hyprland
+
+### Install KirtzOS-v2 Packages
+dnf5 install -y --allowerasing \
     hyprland \
     xdg-desktop-portal-hyprland \
     waybar \
     rofi-wayland \
     kitty \
-    swaylock \
+    swaylock-effects \
     dunst \
     hyprpaper \
     grim \
     slurp \
     wl-clipboard \
     polkit-kde-agent-1
+
+# Clean up COPR repository
+dnf5 -y copr disable solopasha/hyprland
 
 ### Desktop Session Setup
 mkdir -p /usr/share/wayland-sessions
