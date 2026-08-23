@@ -2,12 +2,13 @@
 
 set -ouex pipefail
 
-# Copy the contents of system_files/ of the git repo to /
+# Copy system files from repo to image root
 cp -avf "/ctx/system_files"/. /
 
-### Install KirtzOS-v2 Packages
+### Enable Hyprland COPR Repository
+dnf5 -y copr enable solopasha/hyprland
 
-# Install Hyprland compositor, portal, and Wayland ecosystem utilities
+### Install KirtzOS-v2 Packages
 dnf5 install -y \
     hyprland \
     xdg-desktop-portal-hyprland \
@@ -22,13 +23,13 @@ dnf5 install -y \
     wl-clipboard \
     polkit-kde-agent-1
 
-### Desktop Session Setup
+# Disable COPR repository so it doesn't linger in the final image
+dnf5 -y copr disable solopasha/hyprland
 
-# Register Hyprland in the display manager session menu
+### Desktop Session Setup
 mkdir -p /usr/share/wayland-sessions
 if [ -f "/usr/share/hyprland/hyprland.desktop" ]; then
     cp /usr/share/hyprland/hyprland.desktop /usr/share/wayland-sessions/
 fi
 
-# Ensure correct permissions on default user template dotfiles
 chmod -R 755 /etc/skel/ 2>/dev/null || true
