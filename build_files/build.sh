@@ -6,7 +6,6 @@ set -ouex pipefail
 cp -avf "/ctx/system_files"/. /
 
 ### 1. Enable Hyprland COPR (Using standard Fedora release)
-dnf5 -y copr enable solopasha/hyprland
 dnf5 -y copr enable lionheartp/Hyprland
 
 ### 2. Install KirtzOS-v2 Packages
@@ -19,7 +18,7 @@ dnf5 install -y \
     kitty
 
 # Clean up COPR repository
-dnf5 -y copr disable solopasha/hyprland
+dnf5 -y copr disable lionheartp/Hyprland
 
 ### 3. Desktop Session Setup
 # Ensure wayland-sessions directory exists
