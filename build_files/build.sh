@@ -5,16 +5,11 @@ set -ouex pipefail
 # Copy system files from repo to image root
 cp -avf "/ctx/system_files"/. /
 
-### Install Rawhide repo definitions so dnf5 recognizes the repository
-dnf5 install -y fedora-repos-rawhide
-
-### Enable Hyprland COPR Repository
-dnf5 -y copr enable solopasha/hyprland fedora-rawhide-x86_64
+### Enable Hyprland COPR Repository using Fedora 42 stable builds
+dnf5 -y copr enable solopasha/hyprland fedora-42-x86_64
 
 ### Install KirtzOS-v2 Packages
-dnf5 install -y \
-    --enablerepo=rawhide \
-    --allowerasing \
+dnf5 install -y --allowerasing \
     hyprland \
     xdg-desktop-portal-hyprland \
     waybar \
@@ -28,9 +23,8 @@ dnf5 install -y \
     wl-clipboard \
     polkit-kde-agent-1
 
-# Clean up repositories so they don't linger in the final image
+# Disable COPR repository so it doesn't linger in the final image
 dnf5 -y copr disable solopasha/hyprland
-dnf5 config-manager setopt rawhide.enabled=0 2>/dev/null || true
 
 ### Desktop Session Setup
 mkdir -p /usr/share/wayland-sessions
