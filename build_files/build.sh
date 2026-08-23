@@ -12,16 +12,10 @@ dnf5 -y copr enable lionheartp/Hyprland
 dnf5 install -y \
     noctalia-hyprland-meta \
     xdg-desktop-portal-hyprland \
-    waybar \
-    rofi-wayland \
-    kitty \
-    swaylock-effects \
-    dunst \
-    hyprpaper \
     grim \
     slurp \
     wl-clipboard \
-    polkit-kde-agent-1
+    kitty
 
 # Clean up COPR repository
 dnf5 -y copr disable solopasha/hyprland
