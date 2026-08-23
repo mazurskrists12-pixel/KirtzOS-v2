@@ -1,42 +1,47 @@
-KirtzOS-v2 is a custom, containerized Linux operating system built on top of Universal Blue's Bazzite. It combines a rock-solid, gaming-optimized Fedora base with the modern aesthetics and efficiency of the Hyprland Wayland compositor.
+# KirtzOS-v2
 
-Core System
+An immutable, gaming-focused Bazzite spin featuring a pre-configured Hyprland dynamic tiling desktop environment.
 
-    Base OS: Immutable Fedora/Bazzite image powered by bootc.
+---
 
-    Graphics: Pre-packaged open-source NVIDIA kernel modules and display drivers.
+## Overview
 
-    Architecture: Atomic, containerized system updates with instant rollback capabilities.
+**KirtzOS-v2** is a custom, containerized Linux operating system built on top of Universal Blue's [Bazzite](https://bazzite.gg/). It combines a rock-solid, gaming-optimized Fedora base with the modern aesthetics and efficiency of the **Hyprland** Wayland compositor.
 
-Desktop Environment & Visuals
+---
 
-    Hyprland: Dynamic, GPU-accelerated tiling window manager with smooth workspace transitions and animations.
+## System Specs & Included Software
 
-    Waybar: Minimalist status bar displaying active workspaces, system resource usage, volume, and clock.
+### Core Architecture
+* **Base OS:** Immutable Fedora/Bazzite image managed by `bootc`.
+* **Graphics:** Built-in open-source NVIDIA kernel modules and drivers (`bazzite-nvidia-open`).
+* **Atomic Updates:** Container-based system updates with instant rollback safety.
 
-    Hyprpaper: Native wallpaper daemon for desktop backgrounds.
+### Desktop & UI
+* **Compositor:** **Hyprland** — Dynamic, GPU-accelerated tiling window manager with smooth animations.
+* **Status Bar:** **Waybar** — Custom top bar showing workspaces, clock, volume, and system metrics.
+* **Wallpaper Engine:** **Hyprpaper** — Native wallpaper daemon.
+* **Screen Lock:** **Swaylock-effects** — Lock screen utility with background blur.
 
-    Swaylock-effects: Lock screen utility featuring blurred desktop snapshots.
+### Utilities & Apps
+* **Terminal:** **Kitty** — High-performance, GPU-accelerated terminal emulator.
+* **Launcher:** **Rofi-Wayland** — Fast application menu and window switcher.
+* **Notifications:** **Dunst** — Lightweight notification daemon.
+* **Screenshots:** **Grim** + **Slurp** + **wl-clipboard** — Area selection screenshots copied straight to clipboard.
+* **Authentication:** **Polkit KDE Agent** — Graphical password prompts for root actions.
 
-Included Utilities & Apps
+---
 
-    Kitty: GPU-accelerated, high-performance terminal emulator.
+## Pre-Configured Dotfiles
 
-    Rofi-Wayland: Fast application launcher and window switcher.
+All custom window management settings, keybindings, and status bar themes are built directly into `/etc/skel`. Any new user profile created on the system automatically inherits the complete desktop setup without manual configuration.
 
-    Dunst: Lightweight notification daemon for desktop alerts.
+---
 
-    Grim + Slurp + wl-clipboard: Region screenshot tools that copy directly to your clipboard.
+## Installation & Deployment
 
-    Polkit KDE Agent: Graphical authentication agent for root/privilege requests.
+To switch an existing `bootc`-enabled system (such as Bazzite) to **KirtzOS-v2**, run:
 
-Pre-Configured Dotfiles
-All interface configurations, keybindings, and theme settings are built directly into /etc/skel. New user accounts automatically load the full desktop configuration on first boot without requiring manual setup.
-
-Installation / Rebase Command
-
-To switch any existing bootc-enabled system (like Bazzite) to this image, run:
-Bash
-
+```bash
 sudo bootc switch ghcr.io/mazurskrists12-pixel/image-template:latest
 sudo reboot
