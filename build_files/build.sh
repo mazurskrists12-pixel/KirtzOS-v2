@@ -5,8 +5,8 @@ set -ouex pipefail
 # Copy system files from repo to image root
 cp -avf "/ctx/system_files"/. /
 
-### Enable Hyprland COPR Repository
-dnf5 -y copr enable solopasha/hyprland
+### Enable Hyprland COPR Repository using rawhide chroot
+dnf5 -y copr enable solopasha/hyprland fedora-rawhide-x86_64
 
 ### Install KirtzOS-v2 Packages
 dnf5 install -y \
