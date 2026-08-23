@@ -5,6 +5,9 @@ set -ouex pipefail
 # Copy system files from repo to image root
 cp -avf "/ctx/system_files"/. /
 
+### Install Rawhide repo definitions so dnf5 recognizes the repository
+dnf5 install -y fedora-repos-rawhide
+
 ### Enable Hyprland COPR Repository
 dnf5 -y copr enable solopasha/hyprland fedora-rawhide-x86_64
 
@@ -25,8 +28,9 @@ dnf5 install -y \
     wl-clipboard \
     polkit-kde-agent-1
 
-# Disable COPR repository
+# Clean up repositories so they don't linger in the final image
 dnf5 -y copr disable solopasha/hyprland
+dnf5 config-manager setopt rawhide.enabled=0 2>/dev/null || true
 
 ### Desktop Session Setup
 mkdir -p /usr/share/wayland-sessions
