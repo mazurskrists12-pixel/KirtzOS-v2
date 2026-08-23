@@ -3,8 +3,8 @@ FROM scratch AS ctx
 COPY build_files /
 COPY system_files /system_files
 
-# Base Image: Bazzite 41 (Stable) with open-source NVIDIA drivers
-FROM ghcr.io/ublue-os/bazzite-nvidia-open:41
+# Base Image: Bazzite (Stable) with open-source NVIDIA drivers
+FROM ghcr.io/ublue-os/bazzite-nvidia-open:stable
 
 ### MODIFICATIONS
 # Executes build_files/build.sh while mounting cache and system file contexts
